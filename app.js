@@ -1,6 +1,7 @@
 // @ts-check
 
 const Hapi = require("@hapi/hapi");
+const fetch = require("node-fetch");
 
 const init = async () => {
   const server = Hapi.server({
