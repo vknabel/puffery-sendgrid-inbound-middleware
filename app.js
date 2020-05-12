@@ -34,20 +34,14 @@ const init = async () => {
         .then((response) => {
           console.log("response", response);
           if (response.ok) {
-            h.response({ success: true });
+            return "Success";
           } else {
-            h.response({
-              success: false,
-              error: { message: response },
-            });
+            throw response;
           }
         })
         .catch((error) => {
           console.log("error", error);
-          h.response({
-            success: false,
-            error: error,
-          });
+          throw error;
         });
     },
   });
