@@ -24,7 +24,7 @@ const init = async () => {
         }
       }
 
-      fetch(process.env.PUFFERY_NOTIFY_ADDRESS, {
+      return fetch(process.env.PUFFERY_NOTIFY_ADDRESS, {
         method: "POST",
         body: JSON.stringify(payload),
         headers: {
