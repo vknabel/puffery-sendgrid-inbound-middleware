@@ -7,12 +7,20 @@ const init = async () => {
   const server = Hapi.server({
     port: 3000,
     host: "0.0.0.0",
+    debug: {
+      log: ["*"],
+      request: ["*"],
+    },
+    router: {
+      stripTrailingSlash: true,
+    },
   });
 
   server.route({
     method: "POST",
     path: "/inbound",
     handler: async (request, h) => {
+      console.log("POST /inbound");
       // @ts-ignore
       var payload = { ...request.payload };
 
@@ -44,6 +52,19 @@ const init = async () => {
           throw error;
         });
     },
+  });
+
+  server.events.on("response", function (request) {
+    console.log(
+      request.info.remoteAddress +
+        ": " +
+        request.method.toUpperCase() +
+        " " +
+        request.path +
+        " --> " +
+        // @ts-ignore
+        request.response.statusCode
+    );
   });
 
   await server.start();
