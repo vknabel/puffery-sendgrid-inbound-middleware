@@ -7,10 +7,6 @@ const init = async () => {
   const server = Hapi.server({
     port: 3000,
     host: "0.0.0.0",
-    debug: {
-      log: ["*"],
-      request: ["*"],
-    },
     router: {
       stripTrailingSlash: true,
     },
@@ -19,6 +15,14 @@ const init = async () => {
   server.route({
     method: "POST",
     path: "/inbound",
+    options: {
+      payload: {
+        parse: true,
+        output: "data",
+        allow: "multipart/form-data",
+        multipart: { output: "stream" },
+      },
+    },
     handler: async (request, h) => {
       console.log("POST /inbound");
       // @ts-ignore
