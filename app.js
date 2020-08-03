@@ -27,6 +27,7 @@ const init = async () => {
       console.log("POST /inbound");
       // @ts-ignore
       var payload = { ...request.payload };
+      console.log(`PAYLOAD ${JSON.stringify(payload)}`);
 
       for (const propName in payload) {
         try {
@@ -35,7 +36,7 @@ const init = async () => {
           continue;
         }
       }
-
+      console.log(`BODY ${JSON.stringify(payload)}`);
       return fetch(process.env.PUFFERY_NOTIFY_ADDRESS, {
         method: "POST",
         body: JSON.stringify(payload),
