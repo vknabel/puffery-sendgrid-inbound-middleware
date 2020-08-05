@@ -52,10 +52,12 @@ const init = async () => {
             throw response;
           }
         })
-        .catch((error) => {
-          console.log("ERROR: ", error);
-          console.log(`FAILED BODY: ${JSON.stringify(payload)}`);
-          throw error;
+        .catch(
+          /** @param {Response} error */
+          async (error) => {
+            console.log(`==> POST ${process.env.PUFFERY_NOTIFY_ADDRESS}\n${JSON.stringify(payload)}`);
+            console.log("<==", error.status, error.statusText, await error.text());
+            return h.response(error.text()).code(error.status)
         });
     },
   });
